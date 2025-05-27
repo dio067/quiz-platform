@@ -1,9 +1,9 @@
-import { check } from "express-validtors";
+import { check } from "express-validator";
 import usersRepo from "../../repositories/users.js";
 
 export default {
 	requireEmail: check("email")
-		.tirm()
+		.trim()
 		.normalizeEmail()
 		.isEmail()
 		.custom(async (email) => {
@@ -15,12 +15,12 @@ export default {
 		}),
 
 	requirePassword: check("password")
-		.tirm()
+		.trim()
 		.isLength({ min: 4, max: 20 })
 		.withMessage("Password Must Be Between 4 to 20 Charcter"),
 
 	requirePasswordConfirmation: check("passwordConfirmation")
-		.tirm()
+		.trim()
 		.isLength({ min: 4, max: 20 })
 		.custom(async (passowrdConfirmation, { req }) => {
 			if (!req.body.password === passowrdConfirmation) {
