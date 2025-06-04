@@ -4,7 +4,7 @@ export default (content) => {
       <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Quiz Platform</title>
+        <title>Shop</title>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
         <link href="/css/main.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css"></link>
@@ -22,7 +22,7 @@ export default (content) => {
               <div class="navbar-item">
                 <div class="navbar-buttons">
                   <div class="navbar-item">
-                    <a href="/admin/quizes"><i class="fa fa-star"></i> Quizes</a>
+                    <a href="/admin/quizes"><i class="fa fa-star"></i> Quizes </a>
                   </div>
                 </div>
               </div>
@@ -34,5 +34,5 @@ export default (content) => {
         </div>
       </body>
     </html>
- `;
+  `;
 };

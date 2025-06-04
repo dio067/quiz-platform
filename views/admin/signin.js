@@ -1,7 +1,8 @@
 import layout from "../layout.js";
-
-export default () => {
-	return layout(`<div class="container">
+import helpers from "../helpers.js";
+export default ({ req, errors }) => {
+	return layout(`
+      <div class="container">
         <div class="columns is-centered">
           <div class="column is-one-quarter">
             <form method="POST">
@@ -9,10 +10,18 @@ export default () => {
               <div class="field">
                 <label class="label">Email</label>
                 <input required class="input" placeholder="Email" name="email" />
+                <p class="help is-danger">${helpers.getError(
+									errors,
+									"email"
+								)}</p>
               </div>
               <div class="field">
                 <label class="label">Password</label>
                 <input required class="input" placeholder="Password" name="password" type="password" />
+                <p class="help is-danger">${helpers.getError(
+									errors,
+									"password"
+								)}</p>
               </div>
               <button class="button is-primary">Submit</button>
             </form>

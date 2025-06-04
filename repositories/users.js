@@ -1,23 +1,33 @@
-import util from "util";
+import fs from "fs";
 import crypto from "crypto";
-import Repository from "./repo.js";
+import util from "util";
+import Repository from "./repository.js";
 
 const scrypt = util.promisify(crypto.scrypt);
 
 class UsersRepository extends Repository {
-	async comparePassword(saved, supplied) {
+	async comparePasswords(saved, supplied) {
 		const [hashed, salt] = saved.split(".");
-		const hashedSuppliedBuffer = await scrypt(supplied, salt, 64);
+		const hashedSuppliedBuf = await scrypt(supplied, salt, 64);
 
-		return hashedSuppliedBuffer.toString("hex") === hashed;
+		return hashed === hashedSuppliedBuf.toString("hex");
 	}
 	async create(attrs) {
 		attrs.id = this.randomId();
-		const records = await this.getAll();
-		const record = { ...attrs };
 
+		const salt = crypto.randomBytes(8).toString("hex");
+		const buf = await scrypt(attrs.password, salt, 64);
+
+		const records = await this.getAll();
+		const record = {
+			...attrs,
+			password: `${buf.toString("hex")}.${salt}`,
+		};
 		records.push(record);
+
 		await this.writeAll(records);
+
+		return record;
 	}
 }
 

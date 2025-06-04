@@ -12,7 +12,10 @@
 	"description": "",
 	"type": "module",
 	"dependencies": {
+		"check": "^1.0.0",
+		"cookie-session": "^2.1.0",
 		"express": "^5.1.0",
+		"express-validator": "^7.2.1",
 		"nodemon": "^3.1.10"
 	}
 }

@@ -1,14 +1,16 @@
 import fs from "fs";
 import crypto from "crypto";
+import util from "util";
+
+const scrypt = util.promisify(crypto.scrypt);
 
 export default class Repository {
 	constructor(filename) {
 		if (!filename) {
-			throw new Error("Require a filename");
+			throw new Error("Creating a repository requires a filename");
 		}
 
 		this.filename = filename;
-
 		try {
 			fs.accessSync(this.filename);
 		} catch (err) {
@@ -17,7 +19,7 @@ export default class Repository {
 	}
 
 	async getAll() {
-		return JSON.parse(await fs.readFileSync(this.filename, "utf8")); // again
+		return JSON.parse(await fs.readFileSync(this.filename, "utf8"));
 	}
 
 	async writeAll(records) {
@@ -28,16 +30,7 @@ export default class Repository {
 	}
 
 	randomId() {
-		return crypto.randomBytes(4).toString("hex"); // again
-	}
-
-	async create(attrs) {
-		attrs.id = this.randomId();
-		const records = await this.getAll();
-		const record = { ...attrs };
-
-		records.push(record);
-		await this.writeAll(records);
+		return crypto.randomBytes(4).toString("hex");
 	}
 
 	async getOne(id) {
@@ -56,12 +49,12 @@ export default class Repository {
 		const record = records.find((record) => record.id === id);
 
 		if (!record) {
-			throw new Error(`Record with the id ${id} not found`);
+			throw new Error(`Record with id ${id} not found`);
 		}
-		Object.assign(attrs, record);
+
+		Object.assign(record, attrs);
 		await this.writeAll(records);
 	}
-
 	async getOneBy(filters) {
 		const records = await this.getAll();
 
@@ -76,5 +69,19 @@ export default class Repository {
 				return record;
 			}
 		}
+	}
+
+	async create(attrs) {
+		attrs.id = this.randomId();
+
+		const records = await this.getAll();
+		const record = {
+			...attrs,
+		};
+		records.push(record);
+
+		await this.writeAll(records);
+
+		return record;
 	}
 }
