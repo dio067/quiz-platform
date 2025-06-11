@@ -1,6 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import authRouter from "./routes/admin/auth.js";
+import quizRouter from "./routes/quizes.js";
 import cookieSession from "cookie-session";
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(
 	})
 );
 app.use(authRouter);
+app.use(quizRouter);
 app.listen(4000, () => {
 	console.log("listening");
 });
