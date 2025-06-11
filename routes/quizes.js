@@ -4,8 +4,9 @@ import quizTemplate from "../views/quizes.js";
 
 const router = express.Router();
 
-router.get("/admin/quizes", (req, res) => {
-	res.send(quizTemplate);
+router.get("/admin/quizes", async (req, res) => {
+	const quizes = await quizesRepo.getAll;
+	res.send(quizTemplate({ quizes }));
 });
 
-router.post("/admin/quizes", async (req, res) => {});
+export default router;
