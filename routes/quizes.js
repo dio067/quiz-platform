@@ -1,6 +1,6 @@
 import express from "express";
 import quizesRepo from "../repositories/quizes.js";
-import quizTemplate from "../views/quizes.js";
+import quizTemplate from "../views/quizzes/index.js";
 
 const router = express.Router();
 
