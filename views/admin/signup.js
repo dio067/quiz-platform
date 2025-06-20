@@ -1,4 +1,4 @@
-import layout from "../layout.js";
+import layout from "./layout.js";
 import helpers from "../helpers.js";
 export default ({ req, errors }) => {
 	return layout(`
