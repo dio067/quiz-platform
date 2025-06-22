@@ -1,7 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import authRouter from "./routes/admin/auth.js";
-import quizRouter from "./routes/quizes.js";
+import quizRouter from "./routes/quizzes.js";
 import cookieSession from "cookie-session";
 const app = express();
 
