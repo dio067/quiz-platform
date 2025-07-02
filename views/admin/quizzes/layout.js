@@ -20,7 +20,7 @@ export default ({ content, user }) => {
 
           <div class="navbar-menu">
             <div class="navbar-end">
-              <a class="navbar-item" href="/quizzes">Browse Quizzes</a>
+              <a class="navbar-item" href="/admin/quizzes">Browse Quizzes</a>
               ${
 								user
 									? `
