@@ -31,6 +31,8 @@ export default ({ content, user }) => {
 									: `
                 <a class="navbar-item" href="/signin">Login</a>
                 <a class="navbar-item" href="/signup">Register</a>
+                <a class="navbar-item" href="/signout">Logout</a>
+                
               `
 							}
             </div>
