@@ -2,6 +2,7 @@ import express from "express";
 import quizesRepo from "../../../repositories/quizes.js";
 import quizIndexTemplate from "../../../views/admin/quizzes/index.js";
 import quizNewTemplate from "../../../views/admin/quizzes/new.js";
+import quizEditTemplate from "../../../views/admin/quizzes/edit.js";
 import middlewares from "../../middlewares.js";
 import validtors from "../../validtors.js";
 
@@ -43,6 +44,27 @@ router.get(
 		}
 
 		res.send(quizIndexTemplate({ chosenQuiz }));
+	}
+);
+
+rotuer.post(
+	"/admin/quizzes/:id/edit",
+	middlewares.requireAuth,
+	[validtors.requireTitle, validtors.requireDiscription],
+	middlewares.handleErrors(quizEditTemplate, async (req) => {
+		const quiz = await quizesRepo.getOne(req.params.id);
+		return { quiz };
+	}),
+	async (req, res) => {
+		const changes = req.body;
+
+		try {
+			await quizesRepo.update(req.params.id, changes);
+		} catch {
+			return res.send("Could not find the item");
+		}
+
+		res.redierct("/admin/quizzes");
 	}
 );
 export default router;
