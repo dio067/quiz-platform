@@ -6,11 +6,16 @@ const validtors = {
 		.trim()
 		.isLength({ min: 5, max: 40 })
 		.withMessage("Must be between 5 charcters and 40"),
-	requirePrice: check("price")
+
+	requireDiscription: check("title")
 		.trim()
-		.toFloat()
-		.isFloat({ min: 1 })
-		.withMessage("Must be a valid number"),
+		.isLength({ min: 40, max: 2000 })
+		.withMessage("Must be between 40 charcters and 2000"),
+	requireQuestions: check("questions")
+		.trim()
+		.isLength({ min: 1, max: 40 })
+		.withMessage("Questions Must be between 1 question to 40"),
+
 	requireEmail: check("email")
 		.trim()
 		.normalizeEmail()
