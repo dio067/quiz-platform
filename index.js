@@ -1,7 +1,9 @@
 import express from "express";
 import bodyParser from "body-parser";
-import authRouter from "./routes/admin/auth.js";
-import quizRouter from "./routes/quizzes.js";
+import authAdminRouter from "./routes/admin/authentication/auth.js";
+import authUserRouter from "./routes/user/authentication/auth.js";
+import quizAdminRouter from "./routes/admin/quizzes/quizzes.js";
+import quizUserRouter from "./routes/user/quizzes/quizzes.js";
 import cookieSession from "cookie-session";
 const app = express();
 
@@ -12,8 +14,10 @@ app.use(
 		keys: ["kjdkfjsakdlfjskd"],
 	})
 );
-app.use(authRouter);
-app.use(quizRouter);
+app.use(authUserRouter);
+app.use(authAdminRouter);
+app.use(quizUserRouter);
+app.use(quizAdminRouter);
 app.listen(4000, () => {
 	console.log("listening");
 });
