@@ -1,7 +1,7 @@
 import helpers from "../../helpers.js";
 import layout from "./layout.js";
 
-export default ({ errors }) => {
+export default ({ quizzes, errors }) => {
 	return layout(` 
         <div class="columns is-centered">
         <div class="column is-half">
@@ -12,7 +12,7 @@ export default ({ errors }) => {
               <label class="label">Title</label>
               <input class="input" placeholder="Title" name="title">
               <p class="help is-danger">${helpers.getError(errors, "title")}</p>
-            </div> 
+            </div>
             
             <div class="field">
               <label class="label">Discription</label>

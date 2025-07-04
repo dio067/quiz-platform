@@ -24,14 +24,14 @@ export default ({ content, user }) => {
               ${
 								user
 									? `
-                <a class="navbar-item" href="/quizzes/new">Create Quiz</a>
-                <a class="navbar-item" href="/profile">Profile</a>
-                <a class="navbar-item" href="/logout">Logout</a>
+                <a class="navbar-item" href="/admin/quizzes/new">Create Quiz</a>
+                <a class="navbar-item" href="/admin/profile">Profile</a>
+                <a class="navbar-item" href="/admin/logout">Logout</a>
               `
 									: `
-                <a class="navbar-item" href="/signin">Login</a>
-                <a class="navbar-item" href="/signup">Register</a>
-                <a class="navbar-item" href="/signout">Logout</a>
+                <a class="navbar-item" href="/admin/signin">Login</a>
+                <a class="navbar-item" href="/admin/signup">Register</a>
+                <a class="navbar-item" href="/admin/signout">Logout</a>
                 
               `
 							}
