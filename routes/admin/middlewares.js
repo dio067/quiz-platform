@@ -18,7 +18,7 @@ export default {
 	},
 	requireAuth(req, res, next) {
 		if (!req.session.userId) {
-			return res.redirect("/signin");
+			return res.redirect("/admin/signin");
 		}
 
 		next();
