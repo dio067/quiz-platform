@@ -59,6 +59,20 @@ class Quiz extends Repository {
 		if (!question) {
 			throw new Error(`Question not found with  id ${questionId} `);
 		}
+
+		// Initialize questionIds if it doesn't exist
+		if (!quiz.questionIds) {
+			quiz.questionIds = [];
+		}
+
+		// Check if questionId exist, Add it if not
+		if (!quiz.questionIds.includes(questionId)) {
+			quiz.qeustionIds.push(questionId);
+
+			await this.update(quiz, { questionIds: quiz.questionIds });
+		}
+
+		return quiz;
 	}
 }
 
