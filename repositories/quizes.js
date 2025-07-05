@@ -33,6 +33,17 @@ class Quiz extends Repository {
 			qeustions,
 		};
 	}
+
+	async getAllWithQuestions() {
+		const quizzes = await this.getAll();
+		const quizzesWithQuestions = [];
+
+		for (let quiz of quizzes) {
+			quizzesWithQuestions(await this.getQuestionsWithQuiz(quiz.id));
+		}
+
+		return quizzesWithQuestions;
+	}
 }
 
 export default new Quiz("quizes.json");
