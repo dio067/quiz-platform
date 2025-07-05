@@ -44,6 +44,20 @@ class Quiz extends Repository {
 
 		return quizzesWithQuestions;
 	}
+
+	async addQuestionsToQuiz(quizId, questionsId) {
+		const quiz = this.getOne(quizId);
+
+		if (!quiz) {
+			throw new Error("Quiz not found");
+		}
+
+		const question = this.getOne(questionsId);
+
+		if (!question) {
+			throw new Error("Questions not found");
+		}
+	}
 }
 
 export default new Quiz("quizes.json");
