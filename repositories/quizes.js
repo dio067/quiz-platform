@@ -4,6 +4,8 @@ import questionsRepo from "./questions.js";
 class Quiz extends Repository {
 	async create(attrs) {
 		attrs.id = this.randomId();
+		attrs.questionIds = attrs.questoinIds || [];
+		attrs.createdAt = new Date().toISOString;
 		const records = await this.getAll();
 		records.push(attrs);
 
@@ -45,17 +47,17 @@ class Quiz extends Repository {
 		return quizzesWithQuestions;
 	}
 
-	async addQuestionsToQuiz(quizId, questionsId) {
-		const quiz = this.getOne(quizId);
+	async addQuestionsToQuiz(quizId, questionId) {
+		const quiz = await this.getOne(quizId);
 
 		if (!quiz) {
-			throw new Error("Quiz not found");
+			throw new Error(`Quiz not found with id ${quizId}`);
 		}
 
-		const question = this.getOne(questionsId);
+		const question = await this.getOne(questionId);
 
 		if (!question) {
-			throw new Error("Questions not found");
+			throw new Error(`Question not found with  id ${questionId} `);
 		}
 	}
 }
