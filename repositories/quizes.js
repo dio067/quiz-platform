@@ -1,4 +1,5 @@
 import Repository from "./repo.js";
+import questionsRepo from "./questions.js";
 
 class Quiz extends Repository {
 	async create(attrs) {
@@ -9,6 +10,28 @@ class Quiz extends Repository {
 		await this.writeAll(records);
 
 		return attrs;
+	}
+
+	async getQuestionsWithQuiz(quizId) {
+		const quiz = await this.getOne(quizId);
+
+		if (!quiz) {
+			throw new Error("Quiz not found");
+		}
+
+		const questions = [];
+
+		for (const questionId of quiz.questionIds || []) {
+			const question = await questionsRepo.getOne(questoinId);
+			if (question) {
+				questions.push(question);
+			}
+		}
+
+		return {
+			...quiz,
+			qeustions,
+		};
 	}
 }
 
