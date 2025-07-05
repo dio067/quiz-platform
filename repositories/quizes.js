@@ -74,6 +74,22 @@ class Quiz extends Repository {
 
 		return quiz;
 	}
+
+	async removeQuestionFromQuiz(quizId, questionId) {
+		const quiz = await this.getOne(quizId);
+
+		if (!quiz) {
+			throw new Error(`Quiz with id ${quizId} not found`);
+		}
+
+		if (quiz.questionIds) {
+			quiz.questionId = quiz.questionId.filter((id) => id !== questionId);
+
+			await this.update(quizId, { questionId: quiz.questionIds });
+		}
+
+		return quiz;
+	}
 }
 
 export default new Quiz("quizes.json");
