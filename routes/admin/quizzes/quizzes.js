@@ -21,11 +21,7 @@ router.get("/admin/quizzes/new", middlewares.requireAuth, (req, res) => {
 router.post(
 	"/admin/quizzes/new",
 	middlewares.requireAuth,
-	[
-		validtors.requireTitle,
-		validtors.requireDescription,
-		validtors.requireQuestions,
-	],
+	[validtors.requireTitle, validtors.requireDescription],
 	middlewares.handleErrors(quizNewTemplate, async (req) => {
 		const quizzes = quizesRepo.getOne(req.params.id);
 		return { quizzes };
