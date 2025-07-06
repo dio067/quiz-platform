@@ -23,17 +23,13 @@ router.post(
 	middlewares.requireAuth,
 	[validtors.requireTitle, validtors.requireDescription],
 	middlewares.handleErrors(quizNewTemplate),
-	async (req) => {
-		const quizzes = quizesRepo.getOne(req.params.id);
-		return { quizzes };
-	}
-),
 	async (req, res) => {
 		const { title, discription } = req.body;
 		await quizesRepo.create(title, discription);
 
 		res.redierct("/admin/quizzes");
-	};
+	}
+);
 
 router.get(
 	"/admin/quizzes/:id/edit",
