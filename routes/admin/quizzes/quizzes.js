@@ -48,11 +48,7 @@ router.get(
 router.post(
 	"/admin/quizzes/:id/edit",
 	middlewares.requireAuth,
-	[
-		validtors.requireTitle,
-		validtors.requireDiscription,
-		validtors.requireQuestions,
-	],
+	[validtors.requireTitle, validtors.requireDiscription],
 	middlewares.handleErrors(quizEditTemplate, async (req) => {
 		const quiz = await quizesRepo.getOne(req.params.id);
 		return { quiz };
