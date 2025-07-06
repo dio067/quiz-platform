@@ -90,6 +90,17 @@ class Quiz extends Repository {
 
 		return quiz;
 	}
+
+	async getAvailableQuestion(quizId) {
+		const quiz = await this.getOne(quizId);
+		const allQuestion = await questionsRepo.getAll();
+
+		const usedQuestion = quiz?.questionIds || [];
+
+		return allQuestion.filter(
+			(question) => !usedQuestion.includes(question.id)
+		);
+	}
 }
 
 export default new Quiz("quizes.json");
