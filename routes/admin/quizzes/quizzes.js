@@ -3,8 +3,9 @@ import quizesRepo from "../../../repositories/quizes.js";
 import quizIndexTemplate from "../../../views/admin/quizzes/index.js";
 import quizNewTemplate from "../../../views/admin/quizzes/new.js";
 import quizEditTemplate from "../../../views/admin/quizzes/edit.js";
-import middlewares from "../../middlewares.js";
+import middlewares from "../middlewares.js";
 import validtors from "../../validtors.js";
+import quizzes from "../../../views/admin/quizzes/index.js";
 
 const router = express.Router();
 
@@ -22,7 +23,7 @@ router.post(
 	middlewares.requireAuth,
 	[
 		validtors.requireTitle,
-		validtors.requireDiscription,
+		validtors.requireDescription,
 		validtors.requireQuestions,
 	],
 	middlewares.handleErrors(quizNewTemplate, async (req) => {
@@ -47,14 +48,18 @@ router.get(
 			return res.send("Quiz Not Found");
 		}
 
-		res.send(quizIndexTemplate({ chosenQuiz }));
+		res.send(quizEditTemplate({ chosenQuiz }));
 	}
 );
 
 router.post(
 	"/admin/quizzes/:id/edit",
 	middlewares.requireAuth,
-	[validtors.requireTitle, validtors.requireDiscription],
+	[
+		validtors.requireTitle,
+		validtors.requireDiscription,
+		validtors.requireQuestions,
+	],
 	middlewares.handleErrors(quizEditTemplate, async (req) => {
 		const quiz = await quizesRepo.getOne(req.params.id);
 		return { quiz };
@@ -64,11 +69,16 @@ router.post(
 
 		try {
 			await quizesRepo.update(req.params.id, changes);
-		} catch {
+		} catch (err) {
 			return res.send("Could not find the item");
 		}
 
-		res.redierct("/admin/quizzes");
+		res.redirect("/admin/quizzes");
 	}
 );
+
+router.get("/admin/quizzes/:id/delete", async (req, res) => {
+	await quizesRepo.delete(req.params.id);
+	res.redirect("/admin/quizzes");
+});
 export default router;
