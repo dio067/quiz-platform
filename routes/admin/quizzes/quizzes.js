@@ -25,7 +25,7 @@ router.post(
 	middlewares.handleErrors(quizNewTemplate),
 	async (req, res) => {
 		const { title, discription } = req.body;
-		await quizesRepo.create(title, discription);
+		await quizesRepo.create({ title, discription });
 
 		res.redierct("/admin/quizzes");
 	}
