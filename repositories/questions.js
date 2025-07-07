@@ -1,4 +1,4 @@
-import Repository from "./repo";
+import Repository from "./repo.js";
 
 class Questions extends Repository {
 	async create(attrs) {
