@@ -20,6 +20,10 @@ const validtors = {
 		.isArray()
 		.withMessage("Must be between 2 to 4 options"),
 
+	requireCorrectAnswer: check("correctAnswer")
+		.isNumeric()
+		.withMessage("Must select correct answer"),
+
 	requireEmail: check("email")
 		.trim()
 		.normalizeEmail()
