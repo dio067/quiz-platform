@@ -66,8 +66,12 @@ router.post(
 	}
 );
 
-router.get("/admin/quizzes/:id/delete", async (req, res) => {
-	await quizesRepo.delete(req.params.id);
-	res.redirect("/admin/quizzes");
-});
+router.post(
+	"/admin/quizzes/:id/delete",
+	middlewares.requireAuth,
+	async (req, res) => {
+		await quizesRepo.delete(req.params.id);
+		res.redirect("/admin/quizzes");
+	}
+);
 export default router;
