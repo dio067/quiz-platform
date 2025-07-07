@@ -33,7 +33,7 @@ export default ({ req, errors }) => {
               </div>
               <button class="button is-primary">Submit</button>
             </form>
-            <a href="/signin">Have an account? Sign In</a>
+            <a href="/admin/signin">Have an account? Sign In</a>
           </div>
         </div>
       </div>

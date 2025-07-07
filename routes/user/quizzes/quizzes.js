@@ -2,32 +2,34 @@ import express from "express";
 import quizzesRepo from "../../../repositories/quizes.js";
 import quizzesIndexTemplate from "../../../views/user/quizzes/index.js";
 import quizTakeTemplate from "../../../views/user/quizzes/take.js";
-import middlewares from "../../admin/middlewares.js";
+import quizResultTemplate from "../../../views/user/quizzes/results.js";
+import middlewares from "../middlewares.js";
 
 const router = express.Router();
 
+// List all quizzes for users
 router.get("/user/quizzes", async (req, res) => {
 	const quizzes = await quizzesRepo.getAllWithQuestions();
 	res.send(quizzesIndexTemplate({ quizzes }));
 });
 
+// Take a quiz
 router.get(
 	"/user/quizzes/:id/take",
 	middlewares.requireAuth,
 	async (req, res) => {
 		const quiz = await quizzesRepo.getQuestionsWithQuiz(req.params.id);
-
 		if (!quiz) {
 			return res.send("Quiz not found");
 		}
-
 		if (!quiz.questions || quiz.questions.length === 0) {
-			return res.send("Quiz has no questions");
+			return res.send("This quiz has no questions");
 		}
-
 		res.send(quizTakeTemplate({ quiz }));
 	}
 );
+
+// Submit quiz answers
 router.post(
 	"/user/quizzes/:id/submit",
 	middlewares.requireAuth,
@@ -38,15 +40,12 @@ router.post(
 		}
 
 		const answers = req.body.answers || {};
-
 		let score = 0;
+		let totalQuestions = quiz.questions.length;
 
-		const totalQuestions = quiz.question.length;
-
-		const results = totalQuestions.map((question, index) => {
+		const results = quiz.questions.map((question, index) => {
 			const userAnswer = parseInt(answers[question.id]);
 			const isCorrect = userAnswer === question.correctAnswer;
-
 			if (isCorrect) score++;
 
 			return {
@@ -63,7 +62,7 @@ router.post(
 		res.send(
 			quizResultTemplate({
 				quiz,
-				result,
+				results,
 				score,
 				totalQuestions,
 				percentage,

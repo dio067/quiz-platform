@@ -1,5 +1,5 @@
 import express from "express";
-import middlewares from "../../middlewares.js";
+import middlewares from "../middlewares.js";
 import usersRepo from "../../../repositories/users.js";
 import signupTemplate from "../../../views/user/signup.js";
 import signinTemplate from "../../../views/user/signin.js";

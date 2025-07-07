@@ -1,17 +1,17 @@
 import express from "express";
-import middlewares from "../../middlewares.js";
-import usersRepo from "../../../repositories/users.js";
+import middlewares from "../middlewares.js";
+import usersRepo from "../../../repositories/admin.js";
 import signupTemplate from "../../../views/admin/signup.js";
 import signinTemplate from "../../../views/admin/signin.js";
 import validtors from "../../validtors.js";
 
 const router = express.Router();
 
-router.get("/signup", (req, res) => {
+router.get("/admin/signup", (req, res) => {
 	res.send(signupTemplate({ req }));
 });
 router.post(
-	"/signup",
+	"/admin/signup",
 	[
 		validtors.requireEmail,
 		validtors.requirePassword,
@@ -23,21 +23,21 @@ router.post(
 		const user = await usersRepo.create({ email, password });
 		req.session.userId = user.id;
 
-		res.redirect("/admin/quizes");
+		res.redirect("/admin/quizzes");
 	}
 );
 
-router.get("/signout", (req, res) => {
+router.get("/admin/signout", (req, res) => {
 	req.session = null;
-	return res.send("Your logged out");
+	return res.redirect("/admin/signin");
 });
 
-router.get("/signin", (req, res) => {
+router.get("/admin/signin", (req, res) => {
 	res.send(signinTemplate({ req }));
 });
 
 router.post(
-	"/signin",
+	"/admin/signin",
 	[validtors.requireEmailExist, validtors.requirePasswordValid],
 	middlewares.handleErrors(signinTemplate),
 	async (req, res) => {
@@ -47,7 +47,7 @@ router.post(
 
 		req.session.userId = user.id;
 
-		res.redirect("/admin/quizes");
+		res.redirect("/admin/quizzes/new");
 	}
 );
 export default router;
