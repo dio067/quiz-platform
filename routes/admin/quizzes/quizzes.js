@@ -82,7 +82,9 @@ router.get(
 	middlewares.requireAuth,
 	async (req, res) => {
 		const quiz = await quizesRepo.getQuestionsWithQuiz(req.params.id);
-		const availableQuestions = quizesRepo.getAvailableQuestion(req.params.id);
+		const availableQuestions = await quizesRepo.getAvailableQuestion(
+			req.params.id
+		);
 
 		res.send(questionsTemplate({ quiz, availableQuestions }));
 	}
@@ -108,6 +110,35 @@ router.post(
 		);
 
 		res.redierct(`/admin/quizzes/${req.params.id}/questions`);
+	}
+);
+
+router.post(
+	"/admin/quizzes/:id/questions/new",
+	middlewares.requireAuth,
+	[
+		validtors.requireQuestionText,
+		validtors.requireOptions, /// All validtors will be added later to validtors file
+		validtors.requireCorrectAnswer,
+	],
+	middlewares.handleErrors(questionsTemplate, async (req) => {
+		const quiz = await quizesRepo.getQuestionsWithQuiz(req.params.id);
+		const availableQuestions = await quizesReppo.getAvailableQuestion(
+			req.params.id
+		);
+
+		return { quiz, availableQuestions };
+	}),
+	async (req, res) => {
+		const { questionText, options, correctAnswer } = req.body;
+		const question = await quizesRepo.create({
+			questionText,
+			options,
+			correctAnswer: parseInt(correctAnswer), // Ensure that correctAnswer is Intger
+		});
+
+		await quizesRepo.addQuestionsToQuiz(req.params.id, req.params.questionId);
+		res.redierct("/admin/quizzes/:id/questions");
 	}
 );
 export default router;
