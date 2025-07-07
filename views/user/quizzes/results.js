@@ -1,40 +1,73 @@
 import layout from "../layout.js";
 
-export default ({ quiz }) => {
+export default ({ quiz, results, score, totalQuestions, percentage }) => {
 	return layout(`
 		<div class="container">
 			<div class="section">
-				<h1 class="title">${quiz.title}</h1>
-				<p class="subtitle">${quiz.description || ""}</p>
+				<h1 class="title">Quiz Results: ${quiz.title}</h1>
 				
-				<form method="POST" action="/user/quizzes/${quiz.id}/submit">
-					${quiz.questions
-						.map(
-							(question, index) => `
-						<div class="box">
-							<h4 class="title is-5">${index + 1}. ${question.questionText}</h4>
-							<div class="field">
-								${question.options
-									.map(
-										(option, optIndex) => `
-									<label class="radio">
-										<input type="radio" name="answers[${question.id}]" value="${optIndex}">
-										${option}
-									</label><br>
+				<div class="notification ${
+					percentage >= 70
+						? "is-success"
+						: percentage >= 50
+						? "is-warning"
+						: "is-danger"
+				}">
+					<h2 class="subtitle">
+						Your Score: ${score}/${totalQuestions} (${percentage}%)
+					</h2>
+					<p>
+						${
+							percentage >= 70
+								? "Excellent work!"
+								: percentage >= 50
+								? "Good job!"
+								: "Keep practicing!"
+						}
+					</p>
+				</div>
+				
+				<h3 class="title is-4">Question Review</h3>
+				
+				${results
+					.map(
+						(result, index) => `
+					<div class="box">
+						<h4 class="title is-6">${index + 1}. ${result.question}</h4>
+						<div class="columns">
+							<div class="column">
+								<p><strong>Your Answer:</strong> 
+									<span class="${result.isCorrect ? "has-text-success" : "has-text-danger"}">
+										${
+											result.userAnswer !== undefined
+												? result.options[result.userAnswer]
+												: "No answer"
+										}
+										${result.isCorrect ? " ✓" : " ✗"}
+									</span>
+								</p>
+								${
+									!result.isCorrect
+										? `
+									<p><strong>Correct Answer:</strong> 
+										<span class="has-text-success">
+											${result.options[result.correctAnswer]} ✓
+										</span>
+									</p>
 								`
-									)
-									.join("")}
+										: ""
+								}
 							</div>
 						</div>
-					`
-						)
-						.join("")}
-					
-					<div class="field">
-						<button class="button is-primary is-large" type="submit">Submit Quiz</button>
-						<a href="/user/quizzes" class="button">Cancel</a>
 					</div>
-				</form>
+				`
+					)
+					.join("")}
+				
+				<div class="field">
+					<a href="/user/quizzes" class="button is-primary">Back to Quizzes</a>
+					<a href="/user/quizzes/${quiz.id}/take" class="button">Retake Quiz</a>
+				</div>
 			</div>
 		</div>
 	`);
