@@ -3,6 +3,7 @@ import quizesRepo from "../../../repositories/quizes.js";
 import quizIndexTemplate from "../../../views/admin/quizzes/index.js";
 import quizNewTemplate from "../../../views/admin/quizzes/new.js";
 import quizEditTemplate from "../../../views/admin/quizzes/edit.js";
+import questionsTemplate from "../../../views/admin/quizzes/questions.js";
 import middlewares from "../middlewares.js";
 import validtors from "../../validtors.js";
 import quizzes from "../../../views/admin/quizzes/index.js";
@@ -72,6 +73,18 @@ router.post(
 	async (req, res) => {
 		await quizesRepo.delete(req.params.id);
 		res.redirect("/admin/quizzes");
+	}
+);
+
+// New page to manage Questions of Quiz
+router.get(
+	"/admin/quizzes/:id/questions",
+	middlewares.requireAuth,
+	async (req, res) => {
+		const quiz = await quizesRepo.getQuestionsWithQuiz(req.params.id);
+		const availableQuestions = quizesRepo.getAvailableQuestion(req.params.id);
+
+		res.send(questionsTemplate({ quiz, availableQuestions }));
 	}
 );
 export default router;
