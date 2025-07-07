@@ -1,47 +1,58 @@
 import layout from "./layout.js";
 
-export default ({ quizzes, user }) => {
+export default ({ quizzes }) => {
 	const renderedQuizzes = quizzes
 		.map((quiz) => {
 			return `
-      <div class="column is-one-third">
-        <div class="card product-card">
-          <div class="card-content">
-            <h3 class="title is-4">${quiz.title}</h3>
-            <p class="subtitle is-6">${
-							quiz.description || "No description available"
-						}</p>
-            <p>Questions: ${quiz.questions ? quiz.questions.length : 0}</p>
-          </div>
-          <footer class="card-footer">
-              <a href="/quizzes/${
-								quiz.id
-							}/edit" class="card-footer-item">Edit</a>
-              <form action="/quizzes/${
-								quiz.id
-							}" method="POST" class="card-footer-item">
-                <input type="hidden" name="_method" value="DELETE">
-                <button class="button is-text" type="submit">Delete</button>
-              </form>
-          </footer>
-        </div>
-      </div>
-    `;
+      <tr>
+
+      <td>${quiz.title}</td>
+      <td>${quiz.description || "No discripttion available"}</td>
+      <td>${quiz.questionIds ? quiz.questionIds.length : 0}</td>
+      <td>
+      <a href="/admin/quizzes/
+      ${quiz.id}/edit" class="button is-small is-info>Edit</a>
+      </td>
+
+      <td> 
+      <a href="/admin/quizzes/${
+				quiz.id
+			}/questions" class="button is-small is-primary">Manage Question</a>
+      </td>
+
+      <td>
+      <form action="/admin/quizzes/${
+				quiz.id
+			}/delete" method="POST" style="display: inline;">
+      <button class="is-small is-danger" type="submit" onclick="confirm('Are you sure?')>Delete</button>
+      </form> 
+      </td>
+
+      </tr>
+      `;
 		})
 		.join("\n");
 
-	return layout(
-		{
-			content: `
-          <div class="control">
-        <h1 class="subtitle">Quizzes</h1>  
-        <a href="/admin/quizzes/new" class="button is-primary">New Quizes</a>
+	return layout({
+		content: `
+          <div class="container">
+          <div class="level">
+          <div class="level-left">
+          <h1 class="title">Manage Quizzes</h1>
+          </div>
+          <div class="level-right">
+          <a href="/admin/quizzes/new" class="button is-primary">Create new quiz</a>
+          </div>
       </div>
-      <table class="table">
+
+      <table class="table-is-fullwidth">
         <thead>
           <tr>
             <th>Title</th>
+            <th>Description</th>
+            <th>Questions</th>
             <th>Edit</th>
+            <th>Manage Questions</th>
             <th>Delete</th>
           </tr>
         </thead>
@@ -50,7 +61,5 @@ export default ({ quizzes, user }) => {
         </tbody>
       </table>
     `,
-		},
-		user
-	);
+	});
 };
