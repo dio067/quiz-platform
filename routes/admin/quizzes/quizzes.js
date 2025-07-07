@@ -97,4 +97,17 @@ router.post(
 		res.redirect(`/admin/quizzes/${req.params.id}/questions`);
 	}
 );
+
+router.post(
+	"/admin/quizzes/:id/questions/:questionId/remove",
+	middlewares.requireAuth,
+	async (req, res) => {
+		await quizesRepo.removeQuestionFromQuiz(
+			req.params.id,
+			req.params.questionId
+		);
+
+		res.redierct(`/admin/quizzes/${req.params.id}/questions`);
+	}
+);
 export default router;
