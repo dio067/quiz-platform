@@ -4,8 +4,8 @@ import quizzesIndexTemplate from "../../../views/user/quizzes/index.js";
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
-	const quizzes = quizzesRepo.getAll();
+router.get("/user/quizzes", async (req, res) => {
+	const quizzes = await quizzesRepo.getAllWithQuestions();
 	res.send(quizzesIndexTemplate({ quizzes }));
 });
 
