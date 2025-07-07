@@ -87,4 +87,14 @@ router.get(
 		res.send(questionsTemplate({ quiz, availableQuestions }));
 	}
 );
+
+router.post(
+	"/admin/quizzes/:id/questions/:questionId/add",
+	middlewares.requireAuth,
+	async (req, res) => {
+		await quizesRepo.addQuestionFromQuiz(req.params.id, req.params.questionId);
+
+		res.redirect(`/admin/quizzes/${req.params.id}/questions`);
+	}
+);
 export default router;
