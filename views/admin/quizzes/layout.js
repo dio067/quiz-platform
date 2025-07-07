@@ -8,7 +8,7 @@ export default ({ content, user }) => {
       <title>Quiz Platform</title>
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
       <link rel="stylesheet" href="/css/style.css">
-      <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+      <link rel="icon" type="image/x-icon" href="/images/img.ico">
     </head>
     <body>
       <nav class="navbar is-primary" role="navigation" aria-label="main navigation">

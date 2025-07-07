@@ -23,7 +23,7 @@ router.post(
 		const user = await usersRepo.create({ email, password });
 		req.session.userId = user.id;
 
-		res.redirect("/admin/quizzes");
+		res.redirect("/admin/quizzes/new");
 	}
 );
 
