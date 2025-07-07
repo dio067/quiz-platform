@@ -16,6 +16,10 @@ const validtors = {
 		.isLength({ min: 5, max: 200 })
 		.withMessage("Questions Must be between 5 question to 200"),
 
+	requireOptions: check("options")
+		.isArray()
+		.withMessage("Must be between 2 to 4 options"),
+
 	requireEmail: check("email")
 		.trim()
 		.normalizeEmail()
