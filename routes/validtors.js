@@ -11,10 +11,10 @@ const validtors = {
 		.trim()
 		.isLength({ min: 10, max: 200 })
 		.withMessage("Must be between 10 charcters and 200"),
-	requireQuestions: check("questions")
+	requireQuestionText: check("questionText")
 		.trim()
-		.isLength({ min: 1, max: 40 })
-		.withMessage("Questions Must be between 1 question to 40"),
+		.isLength({ min: 5, max: 200 })
+		.withMessage("Questions Must be between 5 question to 200"),
 
 	requireEmail: check("email")
 		.trim()
