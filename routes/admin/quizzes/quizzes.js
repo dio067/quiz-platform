@@ -48,18 +48,18 @@ router.get(
 router.post(
 	"/admin/quizzes/:id/edit",
 	middlewares.requireAuth,
-	[validtors.requireTitle, validtors.requireDiscription],
+	[validtors.requireTitle, validtors.requireDescription],
 	middlewares.handleErrors(quizEditTemplate, async (req) => {
 		const quiz = await quizesRepo.getOne(req.params.id);
 		return { quiz };
 	}),
 	async (req, res) => {
-		const changes = req.body;
+		const { title, description } = req.body;
 
 		try {
-			await quizesRepo.update(req.params.id, changes);
+			await quizesRepo.update(req.params.id, { title, description });
 		} catch (err) {
-			return res.send("Could not find the item");
+			return res.send("Could not find the quiz");
 		}
 
 		res.redirect("/admin/quizzes");
