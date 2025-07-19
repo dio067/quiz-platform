@@ -1,5 +1,5 @@
 export default (content) => {
-	return `
+    return `
 		<!DOCTYPE html>
 		<html>
 		<head>
@@ -11,45 +11,32 @@ export default (content) => {
 			<link rel="icon" type="image/x-icon" href="/images/img.ico">
 		</head>
 		<body>
-			<!-- Navigation -->
-			<nav class="navbar is-primary" role="navigation" aria-label="main navigation">
-				<div class="navbar-brand">
-					<a class="navbar-item" href="/user/quizzes">
-						<strong>Quiz Platform</strong>
-					</a>
-				</div>
-
-				<div class="navbar-menu">
-					<div class="navbar-start">
+			<nav class="navbar" role="navigation" aria-label="main navigation">
+				<div class="container navbar-container">
+					<div class="navbar-brand">
 						<a class="navbar-item" href="/user/quizzes">
-							Browse Quizzes
+							<strong class="title">Quiz Platform</strong>
 						</a>
 					</div>
-
-					<div class="navbar-end">
-						<div class="navbar-item">
-							<div class="buttons">
-								<a class="button is-light" href="/signin">
-									<strong>Sign In</strong>
-								</a>
-								<a class="button is-info" href="/signup">
-									Sign Up
-								</a>
-								<a class="button is-light" href="/signout">
-									Sign Out
-								</a>
+					<div class="navbar-menu">
+						<div class="navbar-start">
+							<div class="navbar-item">
+								<a href="/user/quizzes">Browse Quizzes</a>
+							</div>
+						</div>
+						<div class="navbar-end">
+							<div class="navbar-item">
+								<a href="/signout">Sign Out</a>
 							</div>
 						</div>
 					</div>
 				</div>
 			</nav>
 
-			<!-- Main Content -->
 			<main>
 				${content}
 			</main>
 
-			<!-- Footer -->
 			<footer class="footer">
 				<div class="content has-text-centered">
 					<p>
