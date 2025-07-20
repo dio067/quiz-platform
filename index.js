@@ -18,6 +18,6 @@ app.use(authUserRouter);
 app.use(authAdminRouter);
 app.use(quizUserRouter);
 app.use(quizAdminRouter);
-app.listen(4000, () => {
-    console.log('listening');
+app.listen(3300, () => {
+    console.log('listening..');
 });
