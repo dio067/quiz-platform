@@ -77,4 +77,8 @@ router.get('/user/quizzes/:id/detail', async (req, res) => {
     res.send(quizDetailsTemplate({ quiz }));
 });
 
+router.get('/', (req, res) => {
+    res.redirect('/user/quizzes');
+});
+
 export default router;
